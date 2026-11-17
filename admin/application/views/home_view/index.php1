@@ -1,0 +1,59 @@
+<?php 
+	$this->load->view('header');
+	$this->load->view('header_end');
+	$this->load->view('modules/mod_header'); 
+	//$this->load->view('modules/mod_left'); 
+?>
+
+        <div class="app-title">
+            <div>
+               <h1><i class="ico-line-chart-1"></i>List member 14 days before expiry</h1>
+            </div>
+            <ul class="breadcrumb">
+               <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>index.php/do_home"><i class="ico-home-1"></i></a></li>
+            </ul>
+         </div>
+		<div class="card card-flat table-responsive">
+            <table class="table datatable table-striped">
+               <thead>
+                  <tr>
+                     <th style="width:50px">#</th>
+                     <th>Member</th>
+                     <th>Package register</th>
+					 <th>Purchase date</th>
+					 <th>Firts date use</th>
+					 <th>End date use</th>
+					 <th class="text-danger-800">Days left</th>
+                     <th class="text-center">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+					<?php 
+						$so_giay_tren_1_ngay = (60*60*24);
+						$i=1; $list = get_report(); 
+						foreach ($list as $data) {
+							$time_left = $data['cend_time_use'] - $data['cfirst_time_use'];
+							$day_left = $time_left/(60*60*24);
+							if($day_left<15) {
+					?>
+                  <tr>
+                     <td><?php echo $i; ?></td>
+                     <td><?php echo $data['cname_member']; ?></td>
+                     <td><?php echo $data['cname_package']; ?></td>
+                     <td><?php echo $data['cpurchase_date']; ?></td>
+					 <td><?php echo $data['cfirst_date_use']; ?></td>
+					 <td><?php echo $data['cend_date_use']; ?></td>
+					 <td class="text-danger-800"><?php echo $day_left; ?></td>
+                     <td class="text-center">
+                        <a target="_blank" href="<?php echo base_url().'index.php/ajax_actions/send_mail/'.$data['nid_member'].'/'.$day_left; ?> "><i class="ico-mail-sent"></i> Send email</a>
+                     </td>
+                  </tr>
+					<?php $i++;} } ?>
+			   </tbody>
+            </table>
+         </div>
+         
+<?php
+	$this->load->view('modules/mod_footer');
+	$this->load->view('footer');
+?>

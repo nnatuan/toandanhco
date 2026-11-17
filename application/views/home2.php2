@@ -1,0 +1,271 @@
+<?php
+   $this->load->view('header');
+   $this->load->view('header_end');	
+   $this->load->view('modules/mod_header');
+   $this->load->view('modules/mod_slideshow');
+   ?>  
+<style>
+.solid-section {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+</style>
+      
+		<section class="product-list">
+
+
+<?php
+	$hour= date('Hi');
+	//echo $min;
+	if($hour >=1630  AND $hour <=2000){
+ ?>
+		<section class="solid-section">
+         <div class="container">
+			<div class="banner-sec">
+			<?php $data = get_module_byid(78);
+				if(isset($data['cnote']))
+					echo $data['cnote'];
+			?>
+			</div>
+            <div class="section-head" style="position:relative;">
+               <h5 class="text-upper" data-inview-showup="showup-translate-right">Flash Sale</h5>
+			   <span id="ascount-down"  class="link-right"></span>
+            </div>
+            <div class="row">
+				<?php  
+				$obj_product = get_product_flash_sale();
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-2 col-xs-6" data-inview-showup="showup-translate-up">
+					<div class="item-product">
+						<a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" alt="<?php echo $product['cproducts']?>"/></a>
+						<div class="info-product">
+							<h6 class="title-item"><a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+							<div class="row">
+								<div class="col-md-10 pdr0">
+									<?php if ($product['fprice_sale'] < $product['fprice'] && $product['cflash'] == 1) { ?>
+									<span class="price-old">
+										<del>₫<?php echo number_format($product['fprice']); ?></del>
+									</span>
+									<span class="price">
+										₫<?php echo number_format($product['fprice_sale']); ?>
+									</span>
+									<?php } else { ?>
+									<span class="price">
+										₫<?php echo number_format($product['fprice']); ?>
+									</span>
+									<?php } ?>
+								</div>
+<?php 
+	$percent_flash = round($product['nflash_sold']/$product['nflash'] * 100 +0.4);
+	if($percent_flash <100){
+?>
+								<div class="col-md-2 pdl0">
+									<a class="add-cart" onclick="add_cart('<?php echo $product['nid']?>',1);"><i class="fa fa-cart-arrow-down" aria-hidden="true" style="font-size:20px;"></i></a>
+								</div>
+<?php }?>
+								<div class="flash-sale-progress-bar__wrapper flash-sale-progress-bar__wrapper--home-page"><div class="flash-sale-progress-bar flash-sale-progress-bar--home-page"><div class="flash-sale-progress-bar__text flash-sale-progress-bar__text--selling-fast">Đã bán <?php echo $product['nflash_sold'] ?>/<?php echo $product['nflash'] ?></div><div class="flash-sale-progress-bar__complement-wrapper flash-sale-progress-bar__complement-wrapper--home-page"><div class="flash-sale-progress-bar__complement-sizer flash-sale-progress-bar__complement-sizer--home-page" style="width: <?php echo 100- $percent_flash ?>%;"><div class="flash-sale-progress-bar__complement-color"></div></div></div><div class="flash-sale-progress-bar__fire"></div></div></div>
+
+
+							</div>
+						</div>
+						<?php if ($product['fprice_sale'] < $product['fprice'] AND $product['cflash'] ==1 ) { ?>
+						<div class="shopee-item-card__badge-wrapper"><div class="shopee-badge shopee-badge--fixed-width shopee-badge--promotion"><div class="shopee-badge--promotion__label-wrapper shopee-badge--promotion__label-wrapper--vi-VN"><span class="percent"><?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?>%</span><span class="shopee-badge--promotion__label-wrapper__off-label shopee-badge--promotion__label-wrapper__off-label--vi-VN">giảm</span></div></div></div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+         </div>
+      </section>
+<?php }?>
+
+
+		<section class="solid-section">
+         <div class="container">
+			<div class="banner-sec">
+			<?php $data = get_module_byid(78);
+				if(isset($data['cnote']))
+					echo $data['cnote'];
+			?>
+			</div>
+			<?php $obj_product = get_product_km_home();
+			if(count($obj_product)>1){
+			?>
+            <div class="section-head" style="position:relative;">
+               <h5 class="text-upper" data-inview-showup="showup-translate-right">Khuyến mãi</h5>
+			   <a href="<?php echo base_url(); ?>khuyen-mai" style="position:absolute;color:#ea196a;right:0;bottom: 5px;">Xem Tất Cả <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="row">
+				<?php  
+				
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-2 col-xs-6" data-inview-showup="showup-translate-up">
+					<div class="item-product">
+						<a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" alt="<?php echo $product['cproducts']?>"/></a>
+						<div class="info-product">
+							<h6 class="title-item"><a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+							<div class="row">
+								<div class="col-md-10 pdr0">
+									<?php if ($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) { ?>
+									<span class="price-old">
+										<del>₫<?php echo number_format($product['fprice']); ?></del>
+									</span>
+									<span class="price">
+										₫<?php echo number_format($product['fprice_sale']); ?>
+									</span>
+									<?php } else { ?>
+									<span class="price">
+										₫<?php echo number_format($product['fprice']); ?>
+									</span>
+									<?php } ?>
+								</div>
+								<div class="col-md-2 pdl0">
+									<a class="add-cart" onclick="add_cart('<?php echo $product['nid']?>',1);"><i class="fa fa-cart-arrow-down" aria-hidden="true" style="font-size:20px;"></i></a>
+								</div>
+							</div>
+						</div>
+						<?php if ($product['fprice_sale'] < $product['fprice'] AND $product['ncheck'] ==1) { ?>
+						<div class="shopee-item-card__badge-wrapper"><div class="shopee-badge shopee-badge--fixed-width shopee-badge--promotion"><div class="shopee-badge--promotion__label-wrapper shopee-badge--promotion__label-wrapper--vi-VN"><span class="percent"><?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?>%</span><span class="shopee-badge--promotion__label-wrapper__off-label shopee-badge--promotion__label-wrapper__off-label--vi-VN">giảm</span></div></div></div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+		<?php }?>
+         </div>
+      </section>
+
+<section class="solid-section">
+         <div class="container">
+			<div class="banner-sec">
+			<?php $data = get_module_byid(79);
+				if(isset($data['cnote']))
+					echo $data['cnote'];
+			?>
+			</div>
+            <div class="section-head" style="position:relative">
+               <h5 class="text-upper" data-inview-showup="showup-translate-right">Hàng mới</h5>
+			   <a href="<?php echo base_url(); ?>hang-moi" style="position:absolute;color:#ea196a;right:0;bottom: 5px;">Xem Tất Cả <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="row">
+				<?php  
+				$obj_product = get_product_hang_moi_home();
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-2 col-xs-6" data-inview-showup="showup-translate-up">
+					<div class="item-product">
+						<a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" alt="<?php echo $product['cproducts']?>"/></a>
+						<div class="info-product">
+							<h6 class="title-item"><a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+							<div class="row">
+								<div class="col-md-10 pdr0">
+									<?php if ($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) { ?>
+									<span class="price-old">
+										<del>₫<?php echo number_format($product['fprice']); ?></del>
+									</span>
+									<span class="price">
+										₫<?php echo number_format($product['fprice_sale']); ?>
+									</span>
+									<?php } else { ?>
+									<span class="price">
+										₫<?php echo number_format($product['fprice']); ?>
+									</span>
+									<?php } ?>
+								</div>
+								<div class="col-md-2 pdl0">
+									<a class="add-cart" onclick="add_cart('<?php echo $product['nid']?>',1);"><i class="fa fa-cart-arrow-down" aria-hidden="true" style="font-size:20px;"></i></a>
+								</div>
+							</div>
+						</div>
+						<?php if ($product['fprice_sale'] < $product['fprice'] AND $product['ncheck'] ==1) { ?>
+						<div class="shopee-item-card__badge-wrapper"><div class="shopee-badge shopee-badge--fixed-width shopee-badge--promotion"><div class="shopee-badge--promotion__label-wrapper shopee-badge--promotion__label-wrapper--vi-VN"><span class="percent"><?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?>%</span><span class="shopee-badge--promotion__label-wrapper__off-label shopee-badge--promotion__label-wrapper__off-label--vi-VN">giảm</span></div></div></div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+         </div>
+      </section>
+
+
+	  <?php  
+		$list_sec = get_material_products_home();
+		foreach($list_sec as $sec) {
+		?>
+	  <section class="solid-section">
+         <div class="container">
+			<?php if($sec['cimage'] != "") { ?>
+			<img src="<?php echo base_url().'upload/images_product/sec/'.$sec['cimage']?>" style="width:100%;"/>
+			<?php } ?>
+            <div class="section-head" style="position:relative">
+               <h5 class="text-upper" data-inview-showup="showup-translate-right"><?php echo $sec['cmaterial_products']; ?></h5>
+			   <a href="<?php echo base_url().$sec['ccode']; ?>" style="position:absolute;color:#ea196a;right:0;bottom: 5px;">Xem Tất Cả <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="row">
+				<?php  
+				$obj_product = get_product_bymat_home($sec['nid']);
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-2 col-xs-6" data-inview-showup="showup-translate-up">
+					<div class="item-product">
+						<a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" alt="<?php echo $product['cproducts']?>"/></a>
+						<div class="info-product">
+							<h6 class="title-item"><a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+							<div class="row">
+								<div class="col-md-10 pdr0">
+									<?php if ($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) { ?>
+									<span class="price-old">
+										<del>₫<?php echo number_format($product['fprice']); ?></del>
+									</span>
+									<span class="price">
+										₫<?php echo number_format($product['fprice_sale']); ?>
+									</span>
+									<?php } else { ?>
+									<span class="price">
+										₫<?php echo number_format($product['fprice']); ?>
+									</span>
+									<?php } ?>
+								</div>
+								<div class="col-md-2 pdl0">
+									<a class="add-cart" onclick="add_cart('<?php echo $product['nid']?>',1);"><i class="fa fa-cart-arrow-down" aria-hidden="true" style="font-size:20px;"></i></a>
+								</div>
+							</div>
+						</div>
+						<?php if ($product['fprice_sale'] < $product['fprice'] AND $product['ncheck'] ==1) { ?>
+						<div class="shopee-item-card__badge-wrapper"><div class="shopee-badge shopee-badge--fixed-width shopee-badge--promotion"><div class="shopee-badge--promotion__label-wrapper shopee-badge--promotion__label-wrapper--vi-VN"><span class="percent"><?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?>%</span><span class="shopee-badge--promotion__label-wrapper__off-label shopee-badge--promotion__label-wrapper__off-label--vi-VN">giảm</span></div></div></div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+         </div>
+      </section>
+	  <?php } ?>
+	  </section>
+
+     
+      <div class="singlepage-block collapse alt-bg" data-block="search" data-show-block-class="animation-scale-top-right" data-hide-block-class="animation-unscale-top-right">
+         <a href="#" class="close-link" data-close-block><i class="fa fa-times" aria-hidden="true"></i></a>
+         <div class="pos-v-center col-12">
+            <div class="container">
+               <div class="row cols-md rows-md">
+                  <div class="lg-col-9 md-col-8 sm-col-12">
+                     <div class="field-group">
+                        <div class="field-wrap"><input class="field-control" type="search" name="search" placeholder="Search Tags"> <span class="field-back"></span></div>
+                     </div>
+                  </div>
+                  <div class="lg-col-3 md-col-4 sm-col-6"><button class="btn btns-white-bordered text-upper">search</button></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="loader-block">
+         <div class="loader-back alt-bg"></div>
+         <div class="loader-image"><img class="image" src="<?php echo base_url(); ?>images/loader.gif" alt="loader.gif"></div>
+      </div>
+<?php 
+	$this->load->view('modules/mod_footer');
+	$this->load->view('footer');
+?>

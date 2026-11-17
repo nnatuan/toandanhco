@@ -1,0 +1,129 @@
+<?php
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+class product_detail extends Controller
+{
+    var $g_nid_session = '';
+    var $g_nid_user = '';
+    var $g_language = '';
+    var $g_language_key = 'product_detail';
+    var $g_form_folder = 'product_detail_form';
+    var $g_menu_id = 'product';
+    var $g_form_title = '';
+    var $g_form_router = '';
+    var $g_form_helpid = '';
+    var $m_nid = '';
+    var $g_form_link = '';
+    var $g_hidden_button = '0';
+    var $obj_detail = '';
+    var $obj_cat = '';
+    function product_detail()
+    {
+        parent::Controller();
+        session_start();
+        $this->load->database();
+        $this->load->helper('ap_db');
+        $this->load->helper('ap_object');
+        $this->load->helper('ap_function');
+        $this->load->helper('ap_view');
+        $this->load->helper('ap_module');
+    }
+    function index()
+    {
+        $this->do_process();
+    }
+    function get($ccode)
+    {
+        $this->m_nid = $ccode;
+        $str_query   = ' UPDATE ' . Fget_ap_table('tproducts') . ' SET nview = nview +1 where ccode = "' . $ccode . '"';
+        $this->db->query($str_query);
+        $this->do_process();
+    }
+    private function do_process()
+    {
+        $this->get_data();
+        $this->caculate_data();
+        $this->do_business();
+        $this->destroy_data();
+    }
+    private function get_data()
+    {
+        $this->load->language('ap', 'eng');
+        $_SESSION['back_link'] = base_url();
+    }
+    private function caculate_data()
+    {
+        $obj_data = get_config_byid(3);
+        foreach ($obj_data as $data):
+            $this->title = $data['cvalue'];
+        endforeach;
+        $obj_data = get_config_byid(2);
+        foreach ($obj_data as $data):
+            $this->tags = $data['cvalue'];
+        endforeach;
+        $obj_data = get_config_byid(4);
+        foreach ($obj_data as $data):
+            $this->description = $data['cvalue'];
+        endforeach;
+    }
+    private function do_business()
+    {
+    //$this->output->cache(10);
+        $obj_detail          = get_product_byid($this->m_nid);
+        $data['title']       = $obj_detail['cproducts'];
+        $data['tags']        = strip_tags($obj_detail['ctag']);
+        $data['description'] = strip_tags($obj_detail['cnote']);
+        $data['nid']         = $this->m_nid;
+        $data['obj_detail']  = $obj_detail;
+        $data['menu_sec']    = '';
+        $data['menu_cat']    = '';
+		$data['menu_top']    = 'products';
+        $data['id_cat']      = $obj_detail['nid_cat_products'];
+        $data['g_ishome']    = 0;
+        $this->load->view('product_detail', $data);
+    }
+    private function destroy_data()
+    {
+    }
+    private function get_language($p_key)
+    {
+        $obj_key = $this->g_language_key . '.';
+        return Fget_language($obj_key . $p_key);
+    }
+    private function get_cookie($p_key)
+    {
+        return '';
+    }
+    private function set_cookie($p_key)
+    {
+        return '';
+    }
+	
+		function update_detail()
+	{
+		//$this->db->get("tproducts");
+		$products= $this->db->get("tproducts");
+		$products= $products->result_array();
+		
+	//	print_r($products);
+		foreach($products as $product){
+			$data = array('cdetail' => '<p>Aliquam a hendrerit tortor, vitae dictum sapien. Proin quis iaculis nisi. Donec convallis, erat eget facilisis laoreet, arcu ante elementum orci, efficitur vulputate nibh turpis id elit. In magna ligula, vestibulum sit amet augue quis, consequat hendrerit turpis. Nam egestas facilisis ipsum aliquam egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam eget viverra odio. Nulla quis iaculis nibh, id cursus odio.</p>
+
+<p>Morbi neque felis, tincidunt eget urna ut, commodo mollis erat. Donec facilisis, nisi eu ultrices fermentum, mauris dolor varius lacus, eu pulvinar risus sapien ut massa. Morbi congue dictum urna. Proin et tellus congue, vulputate purus ac, pulvinar lectus. Nunc sed elit vel massa euismod suscipit ac in nisi. Proin sit amet diam justo. Etiam sed velit sem. Sed tincidunt rutrum orci at viverra.</p>
+
+<p>Cras vestibulum dolor ac leo egestas, in luctus sapien dapibus. Vestibulum eleifend sed ligula tempor auctor. Nunc iaculis faucibus arcu, sit amet egestas magna euismod ac. Nunc nunc velit, auctor non suscipit et, tincidunt hendrerit lacus. Curabitur blandit lacus mauris, id blandit leo tincidunt feugiat. Donec venenatis nulla eu augue consequat sollicitudin. Nullam vitae aliquam est, in malesuada mi. Maecenas in scelerisque lectus. Integer lobortis libero sed consequat venenatis. Nullam aliquam nisi eu libero porta, sit amet finibus purus congue. Integer aliquam lectus at dui dapibus, id pellentesque elit rutrum. Sed nec venenatis est.</p>
+
+<p>Nunc mattis lacus eu vehicula feugiat. Suspendisse nec velit eget justo pharetra varius at eget ex. Etiam imperdiet elit quis ex maximus, id tincidunt nunc sodales. Donec dui odio, pretium eget lectus ac, dictum auctor turpis. Curabitur aliquam viverra purus, eu accumsan ante. Nunc sagittis efficitur pretium. Aenean a accumsan nibh. Duis nulla orci, semper ut finibus eget, interdum id turpis.</p>
+
+<p>Duis a tristique urna. Sed fringilla, purus venenatis congue feugiat, augue turpis vestibulum ex, sed elementum purus quam ut eros. Pellentesque odio sem, varius ac tortor quis, congue consectetur dolor. Vivamus sit amet convallis elit. Morbi ultrices, est nec pellentesque sodales, diam est rutrum diam, non sodales sem mauris eget tellus. Integer rutrum neque id nunc euismod, vel viverra purus accumsan. Quisque congue rutrum erat at pulvinar. Vestibulum ullamcorper pretium ex nec posuere. Suspendisse potenti. Vivamus diam turpis, accumsan ut dapibus eget, sollicitudin a ligula. Cras efficitur maximus venenatis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent a nibh id erat placerat auctor sed id odio.</p>
+');
+			$this->db->where('nid', $product['nid']);
+			$this->db->order_by('nid + 0',"asc" );
+			$this->db->update('tproducts', $data);
+		}
+		//echo "abc";
+		exit("Update done...");
+	//	die()
+		
+	}
+}

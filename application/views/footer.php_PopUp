@@ -1,0 +1,52 @@
+
+<div class="modal in fade" id="myModal">
+ 
+  <div class="modal-body" style="width: 80%;height: auto;margin: 0 auto;text-align: center;">
+    <img src="<?php echo base_url()?>images/tb-nghi-tet.png">
+  </div>
+  
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+</script>
+<script type="text/javascript">	
+jQuery(document).ready(function() {
+
+			jQuery(".sub-img").click(function(){
+				var src = jQuery(this).attr('src');	
+				jQuery(".sub-img").removeClass('active');
+				jQuery(this).addClass('active');		
+				jQuery("#main-img").attr('src',src);
+			});
+		});
+function search_product_ajax(){
+							var _key_word = $('#key_word').val();
+							if(_key_word != '') {
+								$.ajax({
+									url : "<?php echo base_url(); ?>data_product_search",
+									type : "post",
+									dataType:"text",
+									data : {
+										key_word : _key_word
+									},
+									success : function (result){
+										if(result=="0")
+											$('#list_product_search').css('display','none');
+										else
+											$('#list_product_search').css('display','block');
+										$('#list_product_search').html(result);
+									}
+								});
+							} else
+								$('#list_product_search').css('display','none');
+						}
+</script>
+
+</body>
+</html>

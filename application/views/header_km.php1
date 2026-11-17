@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml">
+   <head>
+      <title>Siêu Sale Black Friday, Freeship</title>
+   	<meta http-equiv="pragma" content="no-cache" />     
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">   
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta http-equiv="content-language" content ="vn" />
+      <meta name="description" content="Ansancosmetics - Chương trình khuyến mãi sản phẩm trên website Ansancosmetics, Freeship tận nhà!">
+      <meta property="og:url"                content="https://ansancosmetics.com/black-friday" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="Chương trình khuyến mãi sản phẩm trên website Ansancosmetics" />
+      <meta property="og:description"        content="Ansancosmetics - Chương trình khuyến mãi sản phẩm trên website Ansancosmetics, Freeship tận nhà!" />
+      <meta property="og:image"              content="https://ansancosmetics.com/images/banner_home.jpg" />
+      <meta name="robots" content="INDEX, FOLLOW"/>
+      <meta name="robots" content="NOODP, NOYDIR"/>
+      <link href="<?php echo base_url().'images/favicon.png' ?>" rel="shortcut icon" type="image/x-icon">	  
+      <script src="<?php echo base_url(); ?>js/jquery-1.11.3.min.js"></script>
+      <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
+      <script src='<?php echo base_url(); ?>js/select2.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.bxslider.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/owl.carousel.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/modernizr.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.cookie.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.countdown.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.fancybox.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.flexslider-min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.plugin.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery.actual.min.js?v=42' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>js/jquery-ui.min.js?v=42' type='text/javascript'></script>
+      <script src="<?php echo base_url(); ?>js/html5shiv.js"></script>
+      <script src="<?php echo base_url(); ?>js/jquery-migrate-1.2.0.min.js"></script>
+      <script src='<?php echo base_url(); ?>js/jquery.touchSwipe.min.js' type='text/javascript'></script>
+      
+      <script async="" defer="defer" data-target=".product-resize" data-parent=".products-resize" data-img-box=".image-resize" src="<?php echo base_url(); ?>js/fixheightproductv2.js?v=42"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link href='<?php echo base_url(); ?>css/reset.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/flexslider.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/animate.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/jquery.bxslider.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/fancybox/jquery.fancybox.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/jquery-ui.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/owl.carousel.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <link href='<?php echo base_url(); ?>css/select2.min.css?v=42' rel='stylesheet' type='text/css' media='all' />
+      <script src="<?php echo base_url(); ?>js/mycard.js" type="text/javascript"></script>
+      <script src="<?php echo base_url(); ?>js/jquery.lazyload.min.js" type="text/javascript"></script>
+      <script src="<?php echo base_url(); ?>js/angular.min.js"></script>
+      <script src="<?php echo base_url(); ?>js/angular-sanitize.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>js/spin.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>js/angular-spinner.min.js"></script>
+      <script type="text/javascript" src="<?php echo base_url(); ?>js/angular-loading-spinner.js"></script>
+      <script src="<?php echo base_url(); ?>js/appMain.js"></script>
+      <script src="<?php echo base_url(); ?>js/directive.js"></script>
+      <script src="<?php echo base_url(); ?>js/angular-summernote.js"></script>
+      <script src="<?php echo base_url(); ?>js/paging.js"></script>
+      <script src="<?php echo base_url(); ?>js/ajaxServices.js"></script>
+      <script src="<?php echo base_url(); ?>js/alertsServices.js"></script>
+      <script src='<?php echo base_url(); ?>js/theme-script.js?v=42' type='text/javascript'></script>
+      <link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet" type="text/css" />
+      <link href="<?php echo base_url(); ?>css/responsive.css" rel="stylesheet" type="text/css" />
+	  <link href="<?php echo base_url(); ?>css/my_style.css" rel="stylesheet" type="text/css" />
+	  <link href="<?php echo base_url(); ?>css/responsive_style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">	
+		function add_cart_detail(_id){
+			var _qty = $("#number").val();
+			add_cart(_id, _qty);
+		}
+		 function add_cart(_id,_qty){
+              jQuery.post( "<?php echo base_url()?>thao-tac/mua-san-pham", { id_pro: _id, qty_pro: _qty })
+              .done(function( data ) { 
+              		location.href="<?php echo base_url()?>gio-hang";
+              });	
+          }
+      </script>
+	<link href="<?php echo base_url(); ?>css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.smartmenus.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.smartmenus.bootstrap.js"></script>

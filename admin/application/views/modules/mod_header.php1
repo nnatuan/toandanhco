@@ -1,0 +1,72 @@
+	<header id="header" class="header">
+         <div class="topbar-wrapper">
+            <a class="navbar-toggle nav-link">
+               <div class="lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+               </div>
+            </a>
+            <a class="brand-logo" href="<?php echo base_url(); ?>index.php/do_home">
+            <img src="<?php echo base_url(); ?>images/logo.png" class="full" alt="Vego Admin" />
+            <img src="https://templateclub.co.in/projects/vego/demo/html/assets/images/logo-auth.png" class="small" alt="Vego Admin" />
+            <img src="<?php echo base_url(); ?>images/logo.png" class="mobile" alt="Vego Admin" />
+            </a>
+            <div class="search">
+               <form action="" method="post">
+                  <input class="search-input" type="search" placeholder="Search...">
+               </form>
+            </div>
+            <div class="topbar-nav">
+               <div class="topbar-link topbar-dropdown user-dropdown hidden-sm-down">
+                  <a href="#" data-toggle="dropdown"><img src="<?php echo base_url(); ?>images/user.jpg" alt="user-avatar" class="user-avatar" /></a>
+                  <div class="dropdown-menu animate fadeUp quick nop">
+                     <div class="user-info">
+                        <img src="<?php echo base_url(); ?>images/user.jpg" class="rounded-circle" alt="John Doe">
+                        <div class="username"><?php $user = Obj_get_user_datarow(Fget_userdata('session_nid_user')); echo $user['cname']; ?></div>
+                        <div class="useremail"><?php echo $user['cemail']; ?></div>
+                        <div class="clearfix"></div>
+                     </div>
+                     <ul class="user-links">
+                        <li><a href="<?php echo base_url(); ?>index.php/profile"><i class="ico-user"></i> My profile</a></li>
+                        <li><a href="#"><i class="ico-message"></i> Inbox <span class="badge badge-danger float-right">4</span></a></li>
+                     </ul>
+                     <div class="text-center p10"><a href="<?php echo base_url().'index.php/do_logout'?>" class="btn btn-block btn-labeled"><b><i class="ico-power i-16"></i></b>Logout</a></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="navbar" id="topnav">
+            <div class="navbar-wrapper">
+               <div id="navigation">
+                  <ul class="navigation-menu">
+                     <li class="has-submenu <?php if($menu_active=="home") echo 'active'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/do_home"><i class="ico-home"></i>Dashboard</a>
+                     </li>
+					 <li class="has-submenu <?php if($menu_active=="member") echo 'active'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/do_member_listview"><i class="ico-user"></i>Member</a>
+                     </li>
+					 <li class="has-submenu <?php if($menu_active=="package") echo 'active'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/do_package_listview"><i class="ico-rocket"></i>Packages</a>
+                     </li>
+                     <li class="has-submenu <?php if($menu_active=="package_type") echo 'active'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/do_package_type_listview"><i class="ico-puzzle"></i>Package Type</a>
+                     </li>
+					 <li class="has-submenu <?php if($menu_active=="package_type") echo 'register'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/register"><i class="ico-file"></i>Register</a>
+                     </li>
+                     <li class="has-submenu <?php if($menu_active=="package_type") echo 'report'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php/do_report_listview"><i class="ico-line-chart-1"></i>Report</a>
+                     </li>
+					 <li class="has-submenu">
+                        <a href="#"><i class="ico-mail-box"></i>Send Message</a>
+                     </li>
+                     <li class="has-submenu" <?php if($menu_active=="employee") echo 'report'; ?>>
+                        <a href="<?php echo base_url(); ?>index.php/do_employee_listview"><i class="ico-user-1"></i>Users</a>  
+					</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </header>
+      <main class="app-content">

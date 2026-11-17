@@ -1,0 +1,305 @@
+<?php
+   $this->load->view('header');
+   $this->load->view('header_end');	
+   $this->load->view('modules/mod_header');
+   //$this->load->view('modules/mod_slideshow');
+   ?>   <div class="slideshow">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-3">
+                  </div>
+                  <div class="col-md-9 ">
+                     <div id="home-slider">
+                        <div class="header-top-right">
+                           <div class="homeslider">
+                              <ul id="contenhomeslider">
+                        <?php 
+                         $obj_data= get_banner_list();
+                         foreach($obj_data as $data){
+                         ?>
+                                 <li>
+                                    <a href="<?php echo $data['cbanner_images']?>">
+                                    <img class="img-responsive" src="<?php echo base_url().'upload/banner/'.$data['cimage'] ?>">
+                                    </a>
+                                 </li>
+                                 <?php } ?>  
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <!--Begin-->
+                     <!--End-->                        
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         <div class="adv">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <!--Begin-->
+                     <?php 
+                     	$obj_product = get_product_km_home();
+                     	if(count($obj_product)>1){
+                     ?>
+                     <div class="product-content">
+                        <h2 class="page-heading">
+                           <span class="page-heading-title">
+                           Sản phẩm khuyến mãi
+                           </span>
+                           <a class="view-all" href="<?php echo base_url()?>black-friday">Xem tất cả</a>
+                        </h2>
+                        <div class="latest-deals-product">
+                           <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin="10" data-autoplayTimeout="1000" data-autoplayHoverPause="true" data-responsive='{"0":{"items":2},"600":{"items":3},"1000":{"items":5}}'>
+							<?php 
+							foreach($obj_product as $product) {
+								$obj_color_list = get_product_color($product['nid']);
+																		if(isset($obj_color_list[0]['nid']))
+																			$href=base_url().$product['ccode_sec'].'/'.$product['ccode_cat'].'/'.$product['ccode'].'-'.$obj_color_list[0]['nid'];
+																		else
+																			$href=base_url().$product['ccode_sec'].'/'.$product['ccode_cat'].'/'.$product['ccode'];
+							?>
+                              <li>
+                                 <div class="left-block">
+                                    <a href="<?php echo $href ?>"><img class="img-responsive" src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" /></a>
+                                    <div class="quick-view" style="top: 30%;">
+                                       <a href="<?php echo $href ?>" class="qv-e-button btn-quickview-1 search" title="Xem chi tiết"></a>
+                                    </div>
+                                    <div class="add-to-cart">
+										<?php if(($product['nflash_sold'] < $product['nflash'] OR $product['cflash'] !=1) && $product['nhethang']!=1){?>
+										<a class="add-to-car" href="javascript:void(0);" onclick="add_cart('<?php echo $product['nid']?>',1);">Thêm vào giỏ</a>
+										<?php } ?>
+                                    </div>
+                                    <div class="price-percent-reduction2">
+                                       Sale
+                                       <br>-<?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?><strong>%</strong>
+                                    </div>
+									<?php if ($product['nhethang'] ==1) { ?>
+									<div class="label-het-hang">Hết hàng</div>
+									<?php } ?>
+                                 </div>
+                                 <div class="right-block">
+                                    <h5 class="product-name"><a href="<?php echo $href ?>"><?php echo $product['cproducts']?></a></h5>
+                                    <div class="content_price">
+										<?php if ($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) { ?>
+                                          <span class="price product-price"><?php echo number_format($product['fprice_sale']); ?>₫</span>
+										  <span class="price old-price"><?php echo number_format($product['fprice']); ?>₫</span>
+										  <?php } else { ?>
+										  <span class="price product-price"><?php echo number_format($product['fprice']); ?>₫</span>
+										  <?php } ?>
+                                    </div>
+                                 </div>
+                              </li>
+							  <?php } ?>
+                           </ul>
+                        </div>
+                     </div>
+                 <?php }?>
+                     <!--End-->                       
+                  </div>
+               </div>
+            </div>
+         </div>
+		 
+         <div class="main">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="content-page">
+                        <div class="container">
+							<?php $i=1;
+								$obj_sec = get_material_products_home();
+								foreach($obj_sec as $sec){
+								?>
+                           <div class="category-featured featured1">
+                              <nav class="navbar nav-menu show-brand">
+                                 <div class="container">
+                                    <!-- Brand and toggle get grouped for better mobile display -->
+                                    <div class="navbar-brand"><a href="<?php echo base_url().$sec['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/sec/icon/'.$sec['cicon']; ?>" /><?php echo $sec['cmaterial_products']; ?></a></div>
+                                    <span class="toggle-menu"></span>
+                                    <!-- Collect the nav links, forms, and other content for toggling -->
+                                    <div class="collapse navbar-collapse">
+                                       <ul class="nav navbar-nav">
+                                          <li class="active"><a data-toggle="tab" href="#tab_<?php echo $i; ?>">Tất cả sản phẩm</a></li>
+										  
+                                       </ul>
+                                    </div>
+                                    <!-- /.navbar-collapse -->
+                                 </div>
+                                 <!-- /.container-fluid -->
+                                 <div id="elevator-<?php echo $i; ?>" class="floor-elevator">
+                                    <a href="#elevator-<?php echo $i-1; ?>" class="btn-elevator up <?php if($i==1) echo 'disabled'; ?> fa fa-angle-up"></a>
+                                    <a href="#elevator-<?php echo $i+1; ?>" class="btn-elevator down fa fa-angle-down"></a>
+                                 </div>
+                              </nav>
+                              <div class="product-featured clearfix">
+                                 <div class="row">
+                                    <div class="col-sm-3 sub-category-wapper">
+                                       <ul class="sub-category-list">
+										<?php
+											$list_cat = get_cat_product_bymat($sec['nid']);
+											foreach($list_cat as $cat){
+											?>	
+                                          <li><a href="<?php echo base_url().$sec['ccode'].'/'.$cat['ccode']; ?>"><i class="fa fa-snowflake-o" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $cat['ccat_products'];?></a></li>
+                                        <?php } ?>  
+                                       </ul>
+                                    </div>
+                                    <div class="col-sm-9 col-right-tab">
+                                       <div class="product-featured-tab-content">
+                                          <div class="tab-container">
+                                             <div class="tab-panel active" id="tab_<?php echo $i; ?>">
+                                                <div class="box-left">
+                                                   <div class="banner-img">
+                                                      <a href="<?php echo base_url().$sec['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/sec/'.$sec['cimage']?>"></a>
+                                                   </div>
+                                                </div>
+                                                <div class="box-right">
+                                                   <ul class="product-list row">
+													<?php  
+													$obj_product = get_product_bymat_home($sec['nid']);
+													foreach($obj_product as $product) {
+														$obj_color_list = get_product_color($product['nid']);
+																								if(isset($obj_color_list[0]['nid']))
+																									$href=base_url().$product['ccode_sec'].'/'.$product['ccode_cat'].'/'.$product['ccode'].'-'.$obj_color_list[0]['nid'];
+																								else
+																									$href=base_url().$product['ccode_sec'].'/'.$product['ccode_cat'].'/'.$product['ccode'];
+													?>
+                                                      <li class="col-sm-4 col-xs-6">
+                                                         <div class="right-block">
+                                                            <h5 class="product-name"><a href="<?php echo $href ?>"><?php echo $product['cproducts']?></a></h5>
+                                                            <div class="content_price">
+																<?php if ($product['fprice_sale'] < $product['fprice'] && $product['ncheck'] == 1) { ?>
+																  <span class="price product-price"><?php echo number_format($product['fprice_sale']); ?>₫</span>
+																  <span class="price old-price"><?php echo number_format($product['fprice']); ?>₫</span>
+																  <?php } else { ?>
+																  <span class="price product-price"><?php echo number_format($product['fprice']); ?>₫</span>
+																  <?php } ?>
+                                                            </div>
+                                                         </div>
+                                                         <div class="left-block">
+                                                            <a href="<?php echo $href ?>"><img class="img-responsive" src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" /></a>
+                                                            <div class="quick-view">
+                                                               <a href="<?php echo $href ?>" class="qv-e-button btn-quickview-1 search" title="Xem chi tiết"></a>
+                                                            </div>
+                                                            <div class="add-to-cart">
+																<?php if(($product['nflash_sold'] < $product['nflash'] OR $product['cflash'] !=1) && $product['nhethang']!=1){?>
+																<a class="add-to-car" href="javascript:void(0);" onclick="add_cart('<?php echo $product['nid']?>',1);">Thêm vào giỏ</a>
+																<?php } ?>
+                                                            </div>
+                                                         </div>
+														 <?php if ($product['nhethang'] ==1) { ?>
+														<div class="label-het-hang-2">Hết hàng</div>
+														<?php } ?>
+                                                      </li>
+                                                      <?php } ?>
+												   </ul>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <?php $i++; } ?>
+						</div>
+                     </div>
+                     <script type="text/javascript">
+                        $(document).ready(function () {
+                            $(".category-featured .navbar-nav a.sub").click(function () {
+                                var tabId = $(this).attr("href");
+                                var code = $(this).attr("data-code");
+                                $(".loading").show();
+                                var query = '/option/productgroup';
+                                $.ajax({
+                                    url: query + '?code=' + code,
+                                    success: function (data) {
+                                        $(".loading").hide();
+                                        $(tabId + " .product-list").html(data);
+                                        $(window).resize();
+                                    }
+                                });
+                            });
+                        });
+                     </script>                    
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="partner">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <!-- blog list -->
+                     <div class="blog-list news-home">
+                        <h2 class="page-heading">
+                           <span class="page-heading-title">Cẩm nang</span>
+                        </h2>
+                        <div class="blog-list-wapper">
+                           <ul class="owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin="30" data-autoplayTimeout="1000" data-autoplayHoverPause="true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
+                              <?php  
+								$list = get_news_home_by_cat(2);
+								foreach($list as $data) {
+								?>
+							  <li>
+                                 <div class="post-thumb image-hover2">
+                                    <a href="<?php echo base_url().'tin-tuc/'.$data['ccode']; ?>"><img src="<?php echo base_url().'upload/image_article/'.$data['cimage_thumb'] ?>"></a>
+                                 </div>
+                                 <div class="post-desc">
+                                    <h5 class="post-title">
+                                       <a href="<?php echo base_url().'tin-tuc/'.$data['ccode']; ?>"><?php echo $data['ctitle']; ?></a>
+                                    </h5>
+                                    <div class="post-meta">
+                                       <span class="date">
+                                       <?php echo $data['ddate01']; ?>
+                                       </span>
+                                    </div>
+                                    <div class="readmore">
+                                       <a href="<?php echo base_url().'tin-tuc/'.$data['ccode']; ?>">Xem thêm</a>
+                                    </div>
+                                 </div>
+                              </li>
+                              <?php } ?>
+						   </ul>
+                        </div>
+                     </div>
+                     <!-- ./blog list -->
+                     <!--Begin-->
+                     <div class="row banner-bottom">
+                        <div class="col-sm-6 item-left">
+                           <div class="banner-boder-zoom">
+                               <?php $data = get_module_byid(8);
+									if(isset($data['cnote']))
+										echo $data['cnote'];
+								?>
+                           </div>
+                        </div>
+                        <div class="col-sm-6 item-right">
+                           <div class="banner-boder-zoom">
+								<?php $data = get_module_byid(9);
+									if(isset($data['cnote']))
+										echo $data['cnote'];
+								?>
+                           </div>
+                        </div>
+                     </div>
+                     <!--End-->
+                     <!--Begin-->
+                     <div class="services2">
+                        <?php $data = get_module_byid(1);
+							if(isset($data['cnote']))
+								echo $data['cnote'];
+						?>
+                     </div>
+                     <!--End-->
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         
+<?php 
+	$this->load->view('modules/mod_footer');
+	$this->load->view('footer');
+?>

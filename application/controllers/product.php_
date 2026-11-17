@@ -1,0 +1,232 @@
+<?php
+class product extends Controller
+{
+    var $event = '';
+    var $obj_product = '';
+    var $m_language = 'eng';
+    var $title = '';
+    var $tags = '';
+    var $description = '';
+    var $nid_cat = ''; //ccode (chua doi ten bien, lay ccode ko lay id de bo id tren thanh address)
+    var $nid_sec = '';
+    var $ncurr_page = '';
+    var $nrow_per_page = '25';
+    var $ntotal_page = '';
+    var $ntotal_row = 0;
+	var $min_price = 0;
+	var $max_price = 5000000;
+	
+    function product()
+    {
+        parent::Controller();
+        session_start();
+        $this->load->database();
+        $this->load->helper('ap_function');
+        $this->load->helper('ap_object');
+        $this->load->helper('ap_html');
+        $this->load->helper('ap_view_helper');
+        $this->load->helper('ap_db');
+        $this->load->helper('ap_module');
+    }
+    function cat($nid_cat,$page)
+    {
+        //reset_page();
+        $this->nid_cat = $nid_cat;
+		$this->ncurr_page = $page;	
+        $this->event  = 'list_cat';
+        $this->do_process();
+    }
+	function km($page)
+    {
+        //reset_page();
+		$this->ncurr_page = $page;	
+        $this->event  = 'list_km';
+        $this->do_process();
+    }
+	function pb($page)
+    {
+        //reset_page();
+		$this->ncurr_page = $page;	
+        $this->event  = 'list_pb';
+        $this->do_process();
+    }
+    function sec($nid_sec)
+    {
+        $this->nid_sec = $nid_sec;
+        $this->event  = 'list_sec';
+		$_SESSION['back_link'] = base_url().'section/'.$this->nid_sec;
+        $this->do_process();
+    }
+    private function f_set_cookie($cookie_name, $cookie_value)
+    {
+        return dbset_cookie('cookie_product_' . $cookie_name, $cookie_value);
+    }
+    private function f_get_cookie($cookie_name)
+    {
+        return dbget_cookie('cookie_product_' . $cookie_name);
+    }
+    private function m_language_key($str_key)
+    {
+        return $this->lang->line('lbl.product.' . $str_key);
+    }
+    function index()
+    {
+        $this->do_process();
+    }
+    function do_process()
+    {
+        $this->get_data();
+        $this->caculate_data();
+        $this->do_business();
+        $this->destroy_data();
+    }
+	/*
+    function set_page($nid_cat, $page)
+    {
+        $this->ncurr_page = $page;
+        $this->event     = 'list_cat';
+        $this->nid_cat    = $nid_cat;
+        $this->do_process();
+    } */
+	/*
+	function page_cat($nid_cat = '', $page = '')
+    {		
+		$this->event   = 'list_cat';
+		$this->nid_cat       = $nid_cat;
+        $this->ncurr_page = $page;	
+        $this->do_process();
+    } */
+	function page_cat($nid_cat = '', $min_price = '', $max_price = '', $page = '')
+    {		
+		
+		$this->event   = 'list_cat';
+		$this->nid_cat       = $nid_cat;
+        $this->ncurr_page = $page;	
+		$this->min_price = $min_price;
+		$this->max_price = $max_price;
+		$_SESSION['back_link'] = base_url().'danh-muc/'.$this->nid_cat.'/price-'.$min_price.'-'.$max_price.'/trang-'.$page;
+        $this->do_process();
+    }		
+	/*
+	function page_sec($nid_sec = '', $page = '')
+    {		
+		$this->event   = 'list_sec';
+		$this->nid_sec       = $nid_sec;
+        $this->ncurr_page = $page;	
+        $this->do_process();
+    } */
+	function page_sec($nid_sec = '', $min_price = '', $max_price = '', $page = '')
+    {		
+		//exit($min_price .' '. $max_price . ' ' .$page);
+		$this->event   = 'list_sec';
+		$this->nid_sec    = $nid_sec;
+        $this->ncurr_page = $page;	
+		$this->min_price = $min_price;
+		$this->max_price = $max_price;
+		$_SESSION['back_link'] = base_url().'section/'.$this->nid_sec.'/price-'.$min_price.'-'.$max_price.'/trang-'.$page;
+        $this->do_process();
+    }	
+    private function get_data()
+    {
+		$this->load->language('ap', 'eng');
+    }
+    function next_()
+    {
+        if (isset($_POST['btn_click_next'])) {
+            if ($this->ncurr_page == '')
+                $this->ncurr_page = 1;
+            $this->ncurr_page += 1;
+            $this->do_process();
+        }
+    }
+    function previous_()
+    {
+        if (isset($_POST['btn_click_previous'])) {
+            if (isset($_SESSION['ncurr_page_product']))
+                $this->ncurr_page = $_SESSION['ncurr_page_product'];
+            if ($this->ncurr_page == '')
+                $this->ncurr_page = 1;
+            $this->ncurr_page -= 1;
+            $_SESSION['ncurr_page_product'] = $this->ncurr_page;
+            $this->do_process();
+        }
+    }
+    private function caculate_data()
+    {
+        $this->load->language('ap', $this->m_language);
+        if ($this->ncurr_page == '' OR $this->ncurr_page < 0)
+            $this->ncurr_page = 1;
+        if ($this->event == 'list_cat') {
+            $trow = get_count_product_cat($this->nid_cat);
+        } else if ($this->event == 'list_sec') {
+            $trow = get_count_product_sec($this->ccode_sec);
+        } else if ($this->event == 'list_km') {
+            $trow = get_count_product_km();
+        } else if ($this->event == 'list_pb') {
+            $trow = get_count_product_pb();
+        } else {
+			$trow = get_count_product();
+		}
+        $this->ntotal_row = $trow;	
+        $this->ntotal_page = round($trow / $this->nrow_per_page + 0.4);
+		//exit($trow.'-');
+		if($trow==0)
+			redirect(base_url());
+			//redirect(base_url().'page-not-found.html');
+    }
+    private function do_business()
+    {
+        //$this->output->cache(10);
+        $data['title']        = $this->title;
+        $data['tags']         = $this->tags;
+        $data['description']  = $this->description;
+        $data['nid_cat']       = $this->nid_cat;
+        $data['nid_sec']       = $this->nid_sec;
+        $data['menu_sec']     = '';
+        $data['menu_cat']     = '';
+        $data['ncurr_page']    = $this->ncurr_page;
+        $data['nrow_per_page'] = $this->nrow_per_page;
+        $data['ntotal_page']   = $this->ntotal_page;
+        $data['ntotal_row']    = $this->ntotal_row;
+		$data['min_price']    = $this->min_price;
+		$data['max_price']    = $this->max_price;
+        $data['menu_top']     = $this->nid_cat;
+        $data['g_ishome']     = 0;
+        if ($this->event == 'list_cat') {
+            //$obj_cat             = get_product_cat_bycode($this->nid_cat);
+			//$obj_mat             = get_product_sec_byid($obj_cat['nid_material_products']);
+            //$data['title']       = $obj_cat['ccat_products'];
+            //$data['tags']        = $obj_cat['ctag'];
+            //$data['description'] = $obj_cat['cnote'];
+            //$data['obj_cat']     = $obj_cat;
+			//$data['obj_mat']     = $obj_mat;
+            //$data['type_sort']     = 6;
+            $data['ccode_cat']     = $this->nid_cat;
+            $this->load->view('list_cat', $data);
+		} else if ($this->event == 'list_km') {
+            $this->load->view('list_km', $data);
+        } else if ($this->event == 'list_pb') {
+            $this->load->view('list_pb', $data);
+        } else if ($this->event == 'list_sec') {
+            //$data['title']       = $this->m_language_key('page');
+            //$data['tags']        = $this->m_language_key('page');
+            //$data['description'] = $this->m_language_key('page');
+            //$data['menu_top']    = 'sanpham';
+			$obj_mat             = get_product_sec_bycode($this->nid_sec);
+            $data['title']       = $obj_mat['cmaterial_products'];
+            $data['tags']        = $obj_mat['ctag'];
+            $data['description'] = $obj_mat['cnote'];
+            $data['obj_mat']     = $obj_mat;
+            $this->load->view('list_sec', $data);
+        } else
+            $this->load->view('product', $data);
+    }
+    private function destroy_data()
+    {
+    }
+    private function get_where_guide_string()
+    {
+        $str = 'where nstatus = "1"';
+        return $str;
+    }
+}

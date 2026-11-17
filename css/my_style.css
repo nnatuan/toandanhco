@@ -1,0 +1,554 @@
+@font-face {
+	font-family:Aquawax-Regular;
+	src:url("fonts/Aquawax-Regular-trial.ttf");
+}
+body {
+    margin: 0;
+    padding: 0;
+	color: #000;
+	font-family: arial !important;
+    font-size: 14px;	
+}
+a {
+	text-decoration:none;
+	color: #17375e;
+}
+img {
+	max-width: 100%;
+}
+button {
+	outline: none;
+}
+p {
+    line-height: 24px;
+	margin-bottom: 10px;
+}
+body ul li, body ol li {
+    line-height: 26px;
+}
+.hide {display:none!important;}
+.font-bold {
+	font-weight: bold;
+}
+.w100 {
+	width: 100%;
+}
+.mg0 {
+	margin: 0;
+}
+.mgl0 {
+	margin-left: 0;
+}
+.mgr0 {
+    margin-right: 0;
+}
+.mgt0 {
+    margin-top: 0;
+}
+.mgb0 {
+    margin-bottom: 0;
+}
+.pd0 {
+	padding: 0;
+}
+.pdl0 {
+	padding-left: 0;
+}
+.pdr0 {
+    padding-right: 0;
+}
+.uppercase {
+	text-transform: uppercase;
+}
+.mobile {
+	display: none !important;
+}
+.text-center {
+	text-align: center;
+}
+.cb:after {
+	clear: both;
+	content: '';
+    display: block;
+}
+.scrollup {
+    opacity: 1;
+    position: fixed;
+    bottom: 35px;
+    right: 20px;
+    display: none;
+    z-index: 999;
+}
+a.scrollup:hover div {
+	background: #386E97 !important;
+}
+a.scrollup:hover i {
+	color: white !important;
+}
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px;
+    display: block!important;	
+}
+.pagination a, .pagination strong {
+    background: #fff;
+    display: inline-block;
+    margin-right: 3px;
+    padding: 5px 15px;
+    text-decoration: none;
+	line-height: 1.5em;
+	 border: 0; outline: 0;
+	color: #8A5359;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+	font-size:13px;
+	font-weight:bold;
+	border: 1px dotted #ccc;
+	margin-top: 5px;
+}
+.pagination a:hover {
+    background-color: #BEBEBE;
+    color: #fff;
+}
+.pagination a:active {
+	background: rgba(190, 190, 190, 0.75);
+}
+.pagination strong {
+    color: #fff;
+    background-color: #BEBEBE;
+}
+
+.clearfix::after {
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+
+.sub-container {
+	margin-left: -5px;
+	margin-right: -5px;
+}
+.sub-container .col-md-5ths {
+    padding-right: 5px;
+    padding-left: 5px;	
+}
+.sub-container .sub-img {
+	cursor: pointer;
+}
+.sub-container .sub-img.active {
+	opacity: 0.6;
+}
+
+.hotline-phone-ring-wrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999999;
+}
+.hotline-phone-ring {
+    position: relative;
+    visibility: visible;
+    background-color: transparent;
+    width: 110px;
+    height: 110px;
+    cursor: pointer;
+    z-index: 11;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transition: visibility .5s;
+    left: 0;
+    bottom: 0;
+    display: block;
+}
+.hotline-phone-ring-circle {
+    border-color: #3fdfea;
+}
+.hotline-phone-ring-circle {
+    width: 87px;
+    height: 87px;
+    top: 10px;
+    left: 10px;
+    position: absolute;
+    background-color: transparent;
+    border-radius: 100%;
+    border: 2px solid #e60808;
+    -webkit-animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    opacity: 0.5;
+}
+.hotline-phone-ring-circle-fill {
+    width: 57px;
+    height: 57px;
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    background-color: rgba(230, 8, 8, 0.7);
+    border-radius: 100%;
+    border: 2px solid transparent;
+    -webkit-animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+    animation: phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+.hotline-phone-ring-circle-fill, .hotline-phone-ring-img-circle, .hotline-bar {
+    background-color: #3fdfea;
+}
+.hotline-phone-ring-img-circle {
+    background-color: #e60808;
+    width: 33px;
+    height: 33px;
+    top: 37px;
+    left: 37px;
+    position: absolute;
+    background-size: 20px;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    -webkit-animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hotline-phone-ring-img-circle .pps-btn-img {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.hotline-phone-ring-img-circle .pps-btn-img img {
+    width: 20px;
+    height: 20px;
+}
+.hotline-bar {
+    background: rgb( 63, 223, 234, .7 );
+}
+.hotline-phone-ring-circle-fill, .hotline-phone-ring-img-circle, .hotline-bar {
+	background: rgba(230, 8, 8, 0.75);
+}
+.hotline-bar {
+    position: absolute;
+    background: rgba(230, 8, 8, 0.75);
+    height: 40px;
+    width: 200px;
+    line-height: 40px;
+    border-radius: 3px;
+    padding: 0 10px;
+    background-size: 100%;
+    cursor: pointer;
+    transition: all 0.8s;
+    -webkit-transition: all 0.8s;
+    z-index: 9;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 50px !important;
+    /* width: 175px !important; */
+    left: 33px;
+    bottom: 37px;
+}
+.hotline-bar > a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 50px;
+    display: block;
+    letter-spacing: 1px;
+    line-height: 40px;
+    font-family: Arial;
+}
+@-webkit-keyframes phonering-alo-circle-anim {
+  0% {
+    -webkit-transform: rotate(0) scale(0.5) skew(1deg);
+    -webkit-opacity: 0.1;
+  }
+  30% {
+    -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+    -webkit-opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+    -webkit-opacity: 0.1;
+  }
+}
+@-webkit-keyframes phonering-alo-circle-fill-anim {
+  0% {
+    -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+    opacity: 0.6;
+  }
+  50% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+    opacity: 0.6;
+  }
+}
+@-webkit-keyframes phonering-alo-circle-img-anim {
+  0% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+  10% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  20% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+  30% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  40% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+  50% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+  100% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+}
+.call-zalo {
+    bottom: 100px;
+    position: fixed;
+    left: 26px;
+    z-index: 10;
+    border-radius: 10px;
+}
+.call-zalo img {
+    width: 63px;
+}
+
+.col-footer {
+	width: 33.3333333% !important;
+}
+ul.wgl-products li .woo_product_image {
+    min-height: 280px;	
+	max-height: 280px;	
+	overflow: hidden;
+}
+.elementor-459 .elementor-element.elementor-element-41e1c75 .clients_image {
+    background-color: #eee;
+}
+.elementor-459 .elementor-element.elementor-element-41e1c75 .clients_image:hover {
+    background-color: #ddd;
+}
+.elementor-459 .elementor-element.elementor-element-add4d99 .blog-style-standard .blog-post_text, .blog-style-standard .blog-post_text {
+    display: none;
+}
+.elementor-459 .elementor-element.elementor-element-f09c91c .wgl-infobox_title a {
+	font-size: 18px;
+	line-height: 1.5;
+}
+ul.wgl-products.appear-animation.anim-slide-left {
+    justify-content: center!important;
+}
+.single_product ul.wgl-products.appear-animation.anim-slide-left {
+    justify-content: left!important;
+}
+ul.wgl-products li .picture img {
+    width: 100%;
+	height: 230px;
+}
+ul.wgl-products li .woo_product_image {
+	min-height: initial;
+}
+#dv-1 #list-dv-1 {
+	max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+	padding: 0;
+}
+#dv-1:hover #list-dv-1 {
+	max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+.primary-nav > ul > li > a {
+	padding: 0 20px;
+	padding: 0 7px;
+    font-size: 15px;
+}
+#scroll_up {
+    right: 100px;
+    bottom: 10px;
+}
+.blog-post.format-standard-image .blog-post_media {
+    text-align: center;
+}
+.slick-track .wgl-portfolio-item_image img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.height-120 {
+    min-height: 120px!important;
+    max-height: 120px!important;  
+}
+.breadcrumbs {
+    margin-bottom: 30px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+	padding:15px;
+}
+
+.primary-nav > ul > li > a {
+    padding: 0 15px;
+}
+.primary-nav > ul > li:hover > a > span:after {
+    width: 10px;
+	display:none;
+}
+.primary-nav > ul > li:hover > a {
+	color: #57b33e !important;
+} 
+@media (min-width: 768px){
+.elementor-772 .elementor-element.elementor-element-52673d7 {
+    width: 100%;
+}
+}
+.elementor-772 .elementor-element.elementor-element-51755ed:not(.elementor-motion-effects-element-type-background), .elementor-772 .elementor-element.elementor-element-51755ed > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+	padding-bottom:0;
+}
+.woo_product_content h2.woocommerce-loop-product__title {
+    height: 40px;
+    line-height: 20px;	
+    margin-bottom: 10px;	
+    overflow: hidden;
+}
+del {
+    text-decoration: line-through !important;
+    font-size: 14px;	
+}
+.woocommerce div.product p.price del {
+    font-size: 16px;
+}
+ul.wgl-products .woo_product_content, .woocommerce .products ul.wgl-products .woo_product_content {
+    padding: 17px 25px 13px;
+}
+.primary-nav ul li ul, .primary-nav ul li div.mega-menu-container {
+    padding: 10px 0 10px;
+}
+.primary-nav ul li ul .menu-item a {
+    padding: 7px 20px 7px 20px;
+}
+.text-danger {
+    color: #dc3545!important;
+}
+.columns-4 ul.wgl-products li {
+    background: #fff;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+ul.wgl-products li, .woocommerce .products ul.wgl-products li {
+    margin: 0 30px 30px 0;
+}
+ul.wgl-products li:hover, .woocommerce .products ul.wgl-products li:hover {
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+.elementor-404 .elementor-element.elementor-element-135f942 {
+    padding: 30px 0 !important;
+}
+.short_content {height:72px;overflow:hidden;}
+.elementor-element-ca81a41 {
+	background-color: #40a047 !important;
+}
+.top-info {
+    padding: 0;
+    font-size: 16px;
+}
+.top-info, .top-info a, .top-info a strong, .top-info a:hover, .elementor-772 .elementor-element.elementor-element-7c03c0d .elementor-icon-list-text {color:#fff!important;}
+.elementor-772 .elementor-element.elementor-element-9420dec > .elementor-widget-container {
+    padding: 0;
+}
+.elementor-772 .elementor-element.elementor-element-da5a8ab {
+    width: 10%;
+}
+.elementor-772 .elementor-element.elementor-element-fd3c29c {
+    width: 5%;
+}
+.elementor-772 .elementor-element.elementor-element-d0e5986 > .elementor-widget-container {
+    padding: 0px;
+}
+.elementor-element-51755ed .elementor-container, .elementor-element-ca81a41 .elementor-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+    box-sizing: border-box !important;
+}
+ul.wgl-products .woocommerce-loop-product__title, .woocommerce .products ul.wgl-products .woocommerce-loop-product__title {
+    font-size: 13px;
+}
+ul.wgl-products .woocommerce-loop-product__title {
+    font-size: 14px;
+}
+.title_cat {
+    position: relative;
+    font-size: 20px;
+    margin-bottom: 15px;	
+	overflow: hidden;
+}	
+.title_cat::after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    top: 50%;
+    margin: -10px 0 0 16px;
+    background-color: transparent;
+    background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.05) 75%, transparent 75%, transparent);
+    background-size: 6px 6px;
+    width: 100%;
+    height: 20px;
+}
+ul li p, ol li p {
+    display: inline;
+}

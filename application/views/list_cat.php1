@@ -1,0 +1,50 @@
+<?php
+   $this->load->view('header');
+   $this->load->view('header_end');	
+   $this->load->view('modules/mod_header');
+   ?>  
+	  <section class="back-section solid-section">
+         <div class="fix-image-wrap">
+			<?php 
+				$data = get_module_byid(66);
+				if(isset($data['cnote']))
+					echo $data['cnote'];
+			?>
+		 </div>
+         <div class="theme-back"></div>
+         <div class="container page-info">
+            <div class="section-alt-head">
+               <h2 class="text-upper" data-inview-showup="showup-translate-right">Tin tức</h2>
+               <p data-inview-showup="showup-translate-left">A little something about our company</p>
+            </div>
+         </div>
+         <div class="section-footer">
+            <div class="container" data-inview-showup="showup-translate-down">
+               <ul class="page-path">
+                  <li><a href="index.html">Trang chủ</a></li>
+                  <li class="path-separator"><i class="fa fa-chevron-right" aria-hidden="true"></i></li>
+                  <li>Tin tức</li>
+               </ul>
+            </div>
+         </div>
+      </section>
+      <div class="content-section container">
+         <div class="row cols-lg rows-lg">
+				<?php  
+				$obj_product = get_product_cat($ccode_cat, $nrow_per_page, $ncurr_page , $type_sort);
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-3">
+					<div class="item-news">
+						<a href="<?php echo base_url(). $ccode_sec. '/' . $ccode_cat . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" /></a>
+						<h6 class="title-item"><a href="<?php echo base_url(). $ccode_sec. '/' . $ccode_cat . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+					</div>
+				</div>
+				<?php } ?>
+		 </div>
+      </div>
+      
+<?php 
+	$this->load->view('modules/mod_footer');
+	$this->load->view('footer');
+?>

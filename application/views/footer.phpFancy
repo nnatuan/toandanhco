@@ -1,0 +1,44 @@
+<div id="hidden1" style="display:none;">
+   <img src="https://thanhnienacademy.edu.vn/upload/tn_800.jpg">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript">	
+jQuery(document).ready(function() {
+
+			 jQuery().fancybox("#hidden1");
+
+			jQuery(".sub-img").click(function(){
+				var src = jQuery(this).attr('src');	
+				jQuery(".sub-img").removeClass('active');
+				jQuery(this).addClass('active');		
+				jQuery("#main-img").attr('src',src);
+			});
+		});
+function search_product_ajax(){
+							var _key_word = $('#key_word').val();
+							if(_key_word != '') {
+								$.ajax({
+									url : "<?php echo base_url(); ?>data_product_search",
+									type : "post",
+									dataType:"text",
+									data : {
+										key_word : _key_word
+									},
+									success : function (result){
+										if(result=="0")
+											$('#list_product_search').css('display','none');
+										else
+											$('#list_product_search').css('display','block');
+										$('#list_product_search').html(result);
+									}
+								});
+							} else
+								$('#list_product_search').css('display','none');
+						}
+</script>
+
+</body>
+</html>

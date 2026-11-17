@@ -1,0 +1,106 @@
+#topnav .navigation-menu>li.active>a {
+    background: rgba(0,0,0,.1);
+    color: #fff;
+}
+.mui-btn {
+	height: auto;
+}
+.fa {
+    font: normal normal normal 14px/1 FontAwesome !important
+}
+.personal_text .personal_social {
+    margin-top: 45px;
+}
+.basic_info, .personal_social {
+    background: #fff;
+    display: block;
+	list-style: none;	
+	padding: 0;
+}
+.personal_text .personal_social li {
+    display: inline-block;
+    margin-right: 7px;
+}
+.personal_text .basic_info li a {
+    position: relative;
+    padding-left: 40px;
+    font-size: 16px;
+    color: #777;
+}
+.personal_text .basic_info li a i {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px !important;
+    color: #766dff;
+}
+.personal_text .personal_social li:hover a {
+    background-image: -moz-linear-gradient(0deg,#766dff 0%,#88f3ff 100%);
+    background-image: -webkit-linear-gradient(0deg,#766dff 0%,#88f3ff 100%);
+    background-image: -ms-linear-gradient(0deg,#766dff 0%,#88f3ff 100%);
+}
+.personal_text .personal_social li a {
+    line-height: 40px;
+    width: 40px;
+    background: #e8e8e8;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+}
+.personal_text p {
+    font-family: roboto,sans-serif;
+    color: #777;
+    margin-bottom: 30px;
+}
+.personal_text h6 {
+    font-size: 14px;
+    font-family: roboto,sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.1px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: #222;
+}
+.personal_text h3 {
+    font-size: 48px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: #222;
+}
+.personal_text h4 {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: roboto,sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #222;
+}
+.header {
+    height: 160px;
+}
+#topnav {
+    top: 15px;
+}
+.header .brand-logo, .topbar-nav .topbar-link {
+	z-index: 999;
+}
+.mui-btn {
+	text-transform: inherit;
+}
+.qrcode {
+	position:absolute;right:0;bottom:0;
+}
+.header .brand-logo img {
+    height: 78px;
+}
+.mui-btn--accent:hover {
+    background-color: #4596a0;
+}
+.app-title {
+	border: 1px solid #2e6390;
+	padding: 20px 30px 17px 0px;
+    border-radius: 17px;
+}

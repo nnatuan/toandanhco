@@ -1,0 +1,105 @@
+<?php
+   $this->load->view('header');
+   $this->load->view('header_end');	
+   $this->load->view('modules/mod_header');
+   $this->load->view('modules/mod_slideshow');
+   ?>  
+<style>
+.solid-section {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+</style>
+      <section class="slogan">
+         <div class="container">
+			<div class="col-md-3 text-center">
+				<img src="<?php echo base_url(); ?>images/slogan1.png" style="width:45px;height:45px;margin-right:10px;">
+				<span style="line-height:45px;font-size: 18px;">Giờ vàng</span>
+			</div>
+			<div class="col-md-3 text-center">
+				<img src="<?php echo base_url(); ?>images/slogan2.png" style="width:45px;height:45px;margin-right:10px;">
+				<span style="line-height:45px;font-size: 18px;">Khuyến Mãi</span>
+			</div>
+			<div class="col-md-3 text-center">
+				<img src="<?php echo base_url(); ?>images/slogan3.png" style="width:45px;height:45px;margin-right:10px;">
+				<span style="line-height:45px;font-size: 18px;">Rẻ Vô Địch</span>
+			</div>
+			<div class="col-md-3 text-center">
+				<img src="<?php echo base_url(); ?>images/slogan4.png" style="width:45px;height:45px;margin-right:10px;">
+				<span style="line-height:45px;font-size: 18px;">Combo giảm giá</span>
+			</div>
+		 </div>
+		</section>
+		<section class="product-list">
+	  <?php  
+		$list_sec = get_material_products_home();
+		foreach($list_sec as $sec) {
+		?>
+	  <section class="solid-section">
+         <div class="container">
+            <div class="section-head" style="position:relative">
+               <h5 class="text-upper" data-inview-showup="showup-translate-right"><?php echo $sec['cmaterial_products']; ?></h5>
+			   <a href="<?php echo base_url().$sec['ccode']; ?>" style="position:absolute;color:#ea196a;right:0;bottom: 5px;">Xem Tất Cả <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="row">
+				<?php  
+				$obj_product = get_product_bymat_home($sec['nid']);
+				foreach($obj_product as $product) {
+				?>
+				<div class="col-md-2" data-inview-showup="showup-translate-up">
+					<div class="item-product">
+						<a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><img src="<?php echo base_url().'upload/images_product/resize_images/'.$product['cimage_resize']?>" alt="<?php echo $product['cproducts']?>"/></a>
+						<div class="info-product">
+							<h6 class="title-item"><a href="<?php echo base_url(). $product['ccode_sec'] . '/' . $product['ccode_cat'] . '/' . $product['ccode']; ?>"><?php echo $product['cproducts']?></a></h6>
+							<div class="row">
+								<div class="col-md-10 pdr0">
+									<?php if ($product['fprice_sale'] < $product['fprice']) { ?>
+									<span class="price-old">
+										<del>₫<?php echo number_format($product['fprice']); ?></del>
+									</span>
+									<?php } ?>
+									<span class="price">
+										₫<?php if ($product['fprice_sale'] == "" || $product['fprice_sale'] == 0) echo "Liên hệ"; else echo number_format($product['fprice_sale']); ?>
+									</span>
+								</div>
+								<div class="col-md-2 pdl0">
+									<a class="add-cart" onclick="add_cart('<?php echo $product['nid']?>',1);"><i class="fa fa-cart-arrow-down" aria-hidden="true" style="font-size:20px;"></i></a>
+								</div>
+							</div>
+						</div>
+						<?php if ($product['fprice_sale'] < $product['fprice']) { ?>
+						<div class="shopee-item-card__badge-wrapper"><div class="shopee-badge shopee-badge--fixed-width shopee-badge--promotion"><div class="shopee-badge--promotion__label-wrapper shopee-badge--promotion__label-wrapper--vi-VN"><span class="percent"><?php echo number_format(round(($product['fprice']-$product['fprice_sale'])/$product['fprice']*100+0.4))?>%</span><span class="shopee-badge--promotion__label-wrapper__off-label shopee-badge--promotion__label-wrapper__off-label--vi-VN">giảm</span></div></div></div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+         </div>
+      </section>
+	  <?php } ?>
+	  </section>
+
+     
+      <div class="singlepage-block collapse alt-bg" data-block="search" data-show-block-class="animation-scale-top-right" data-hide-block-class="animation-unscale-top-right">
+         <a href="#" class="close-link" data-close-block><i class="fa fa-times" aria-hidden="true"></i></a>
+         <div class="pos-v-center col-12">
+            <div class="container">
+               <div class="row cols-md rows-md">
+                  <div class="lg-col-9 md-col-8 sm-col-12">
+                     <div class="field-group">
+                        <div class="field-wrap"><input class="field-control" type="search" name="search" placeholder="Search Tags"> <span class="field-back"></span></div>
+                     </div>
+                  </div>
+                  <div class="lg-col-3 md-col-4 sm-col-6"><button class="btn btns-white-bordered text-upper">search</button></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="loader-block">
+         <div class="loader-back alt-bg"></div>
+         <div class="loader-image"><img class="image" src="<?php echo base_url(); ?>images/loader.gif" alt="loader.gif"></div>
+      </div>
+<?php 
+	$this->load->view('modules/mod_footer');
+	$this->load->view('footer');
+?>
