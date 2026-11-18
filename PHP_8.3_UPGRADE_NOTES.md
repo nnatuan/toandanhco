@@ -18,19 +18,31 @@
 ### 2.1. Tầng tương thích Polyfill (`php83_compat.php`)
 Tạo một file tương thích độc lập `php83_compat.php` đặt tại thư mục gốc dự án để bù đắp các hàm/cơ chế đã bị PHP 7/8 loại bỏ:
 
-1. **Chế độ báo lỗi MySQLi (`MYSQLI_REPORT_OFF`):**
+1. **Thiết lập múi giờ mặc định (`date.timezone`):**
+   * *Hiện tượng:* Trên hosting cPanel/PHP-FPM, nếu chưa khai báo `date.timezone` trong `php.ini`, các hàm thời gian hoặc `phpinfo()` sẽ kích hoạt `PHP Warning: It is not safe to rely on the system's timezone settings...`.
+   * *Giải pháp:* Thiết lập tự động múi giờ ngay ở đầu file polyfill:
+     ```php
+     if ( ! ini_get('date.timezone')) {
+         date_default_timezone_set('Asia/Ho_Chi_Minh');
+         ini_set('date.timezone', 'Asia/Ho_Chi_Minh');
+     }
+     ```
+2. **Chế độ báo lỗi MySQLi (`MYSQLI_REPORT_OFF`):**
    * *Hiện tượng:* Từ PHP 8.1+, MySQLi mặc định ném ngoại lệ `mysqli_sql_exception` thay vì trả về `FALSE` khi truy vấn lỗi. Điều này làm sập website trên các framework cũ.
    * *Giải pháp:* Gọi `mysqli_report(MYSQLI_REPORT_OFF);` ngay khi khởi tạo polyfill.
-2. **Khai báo thuộc tính động cho lớp Model kế thừa:**
+3. **Khai báo thuộc tính động cho lớp Model kế thừa:**
    * *Hiện tượng:* Các dự án CodeIgniter cũ thường sử dụng lớp `Model` (kế thừa từ `CI_Model`) hoặc gán thuộc tính động vào Controller/Model. Trên PHP 8.2+, điều này phát sinh lỗi Deprecated.
    * *Giải pháp:* Khai báo thuộc tính `#[\AllowDynamicProperties]` cho `class Model extends CI_Model`.
-3. **Polyfill hàm `each()`:**
+4. **Polyfill hàm `each()`:**
    * *Hiện tượng:* Hàm `each()` đã bị xóa bỏ hoàn toàn từ PHP 8.0.
    * *Giải pháp:* Tái hiện bằng `current()`, `key()`, `next()`.
-4. **Polyfill nhóm hàm Regex POSIX cũ:**
+5. **Polyfill nhóm hàm Regex POSIX cũ:**
    * *Hiện tượng:* `ereg()`, `eregi()`, `ereg_replace()`, `eregi_replace()`, `split()`, `spliti()` đã bị xóa bỏ trong PHP 7.0+.
    * *Giải pháp:* Chuyển hướng an toàn sang PCRE (`preg_match`, `preg_replace`, `preg_split`).
-5. **Polyfill `magic_quotes` & MySQL cũ:**
+6. **Polyfill `utf8_encode()` và `utf8_decode()`:**
+   * *Hiện tượng:* Đã bị Deprecated từ PHP 8.2 và xóa bỏ trong PHP 9.0.
+   * *Giải pháp:* Bổ sung polyfill thay thế bằng `mb_convert_encoding()` hoặc `iconv()`.
+7. **Polyfill `magic_quotes` & MySQL cũ:**
    * `get_magic_quotes_gpc()`, `get_magic_quotes_runtime()`, `set_magic_quotes_runtime()` trả về `FALSE` để tránh lỗi Fatal khi thư viện cũ (như phpThumb, PHPMailer cũ) gọi tới.
    * Polyfill `mysql_escape_string()` bọc bằng `addcslashes()`.
 
@@ -152,15 +164,78 @@ Trên PHP 8.0+, constructor trùng tên với tên class (`function TenClass()`)
 
 ---
 
+### 2.9. Cấu hình `db_debug` & Ngăn chặn sập website do lỗi Database trên Production
+* **Hiện tượng:** Mặc định CodeIgniter bật `$db['default']['db_debug'] = TRUE;`. Khi chuyển lên hosting/server thực tế, bất kỳ truy vấn nào gặp lỗi nhỏ (như vi phạm MySQL Strict Mode, câu lệnh INSERT thông tin cookie/lượt truy cập phụ) sẽ khiến framework dừng thực thi và ném ra trang lỗi HTTP 500. Hosting (Apache/cPanel/Nginx) lập tức điều hướng khách hàng về `page-not-found.html` hoặc trang lỗi 500.
+* **Quy tắc cấu hình bắt buộc:** Tự động bật/tắt `db_debug` theo môi trường:
+  ```php
+  $is_local = isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false);
+  if ($is_local) {
+      $db['default']['db_debug'] = TRUE;
+  } else {
+      $db['default']['db_debug'] = FALSE; // Tắt trên Production để website luôn hoạt động ổn định
+  }
+  ```
+
+---
+
+### 2.10. Kiểm tra an toàn khi truy xuất phần tử mảng (Array Offset on null/false)
+* **Hiện tượng:** Trên PHP 5.x và 7.x, nếu truy vấn DB trả về rỗng (`NULL` hoặc `FALSE`), việc truy cập phần tử `$row['col_name']` chỉ sinh ra thông báo Notice. Nhưng từ **PHP 8.0+**, hành vi này trở thành **Fatal Error** (`Cannot access offset of type string on null / bool`), làm sập hoàn toàn Controller và trả về HTTP 500.
+* **Quy tắc xử lý:**
+  1. Luôn kiểm tra tính hợp lệ của mảng trước khi dùng:
+     ```php
+     $obj_detail = get_product_byid($this->m_nid);
+     if (empty($obj_detail) || ! is_array($obj_detail)) {
+         redirect(base_url()); // hoặc show_404();
+         return;
+     }
+     ```
+  2. Sử dụng toán tử `isset()` an toàn cho các trường dữ liệu:
+     ```php
+     $data['title'] = isset($obj_detail['cproducts']) ? $obj_detail['cproducts'] : '';
+     ```
+
+---
+
+### 2.11. Cơ chế Fail-safe cho Cookie, Session & Bộ đếm khách Online
+* **Hiện tượng ("Chủ web vào được, khách mới bị văng ra 404/500"):**
+  * Chủ web (đã từng truy cập) đã có sẵn IP và Cookie trong DB nên không chạy lệnh INSERT.
+  * Khách mới (truy cập lần đầu) sẽ kích hoạt hàm lưu cookie popup, lưu IP hoặc đếm khách online (`tguest_online`).
+  * Khách dùng mạng 4G/5G/IPv6 có địa chỉ IP dài hơn 15 ký tự, hoặc session chưa sinh ID dẫn đến trường `session_id` là chuỗi rỗng `''`.
+  * Trên MySQL 8 / MariaDB bật Strict Mode (`STRICT_TRANS_TABLES`), việc INSERT chuỗi rỗng vào cột NOT NULL hoặc IP quá dài sẽ gây lỗi SQL nghiêm trọng, làm sập trang chủ đối với khách mới.
+* **Quy tắc viết code Fail-safe:**
+  * Luôn gán giá trị mặc định cho session nếu rỗng:
+    ```php
+    if (empty($num_nid_session)) {
+        $num_nid_session = session_id() ? session_id() : (isset($_SERVER['REMOTE_ADDR']) ? md5($_SERVER['REMOTE_ADDR']) : 'guest');
+    }
+    ```
+  * Mọi tác vụ ghi database phụ trợ (cookie, đếm truy cập, log thống kê) **bắt buộc phải bọc trong `try ... catch (\Throwable $e)`** và tạm thời tắt `db_debug`:
+    ```php
+    $old_db_debug = $obj_helper->db->db_debug;
+    $obj_helper->db->db_debug = FALSE;
+    try {
+        // Thực thi truy vấn INSERT / UPDATE phụ trợ
+    } catch (\Throwable $e) {
+        // Bỏ qua an toàn, tuyệt đối không để lỗi lưu vết phụ làm gián đoạn trải nghiệm người dùng
+    }
+    $obj_helper->db->db_debug = $old_db_debug;
+    ```
+  * Không để các mệnh đề `$this->db->where()` thừa thãi ngay trước lệnh `$this->db->insert()`.
+
+---
+
 ## 3. CHECKLIST KIỂM TRA NHANH KHI ÁP DỤNG CHO DỰ ÁN MỚI
 
 | STT | Hạng mục kiểm tra | Trạng thái đạt yêu cầu |
 |:---:|:---|:---|
-| 1 | File `php83_compat.php` | Đã copy vào thư mục gốc dự án |
-| 2 | Điểm vào `index.php` & `[admin]/index.php` | Đã nạp `php83_compat.php` và cấu hình `error_reporting` |
-| 3 | Core Controllers & Models | Đã gắn `#[\AllowDynamicProperties]` |
+| 1 | File `php83_compat.php` | Đã copy vào thư mục gốc, có đủ polyfill (MySQLi report off, each, regex POSIX, utf8_encode/decode, **timezone set**) |
+| 2 | Điểm vào `index.php` & `[admin]/index.php` | Đã nạp `php83_compat.php` và cấu hình `error_reporting` triệt tiêu Warning/Deprecated |
+| 3 | Core Controllers & Models | Đã gắn `#[\AllowDynamicProperties]` (cả Frontend và Admin) |
 | 4 | Cú pháp ngoặc nhọn `{}` | Đã chuyển sạch sang `[]` (đặc biệt trong thư mục `phpThumb` / upload ảnh) |
 | 5 | Hàm `ereg` / `split` / `each` | Đã chuyển sang `preg_match` / `explode` / `foreach` |
 | 6 | Constructor Model | Sử dụng `public function __construct()` và kế thừa `CI_Model` |
-| 7 | Cấu hình Database | Sử dụng driver `mysqli` |
-| 8 | Kiểm tra thực tế | Truy cập Frontend và Backend Admin không có Warning, HTTP 200 |
+| 7 | Cấu hình Database Driver | Sử dụng driver `mysqli` (không dùng `mysql`) |
+| 8 | Cấu hình `db_debug` | Tự động tắt `db_debug = FALSE` trên môi trường Production |
+| 9 | Cơ chế Fail-safe Visitor/Cookie | Bọc `try..catch` cho các thao tác ghi DB phụ (cookie popup, đếm online, log) để không làm sập trang chủ khi khách mới truy cập |
+| 10 | Truy xuất mảng dữ liệu | Đã kiểm tra `empty()` / `is_array()` trước khi truy xuất key, tránh Fatal Error trên PHP 8.x |
+| 11 | Kiểm tra thực tế | Mở trình duyệt ẩn danh (Incognito) hoặc thiết bị mới truy cập Frontend & Backend Admin, kết quả HTTP 200, không bị điều hướng lỗi |

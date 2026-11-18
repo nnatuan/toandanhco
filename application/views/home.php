@@ -486,8 +486,8 @@
                                              array('name' => 'Mitsubishi', 'img' => 'mitshubishielectric.png', 'sub' => 'Nhật Bản', 'color' => '#e60012'),
                                              array('name' => 'OBO Bettermann', 'img' => 'obo-bettermann.png', 'sub' => 'Đức', 'color' => '#1d3557'),
                                              array('name' => 'Kipp & Zonen', 'img' => 'kipp-zonen.png', 'sub' => 'Hà Lan', 'color' => '#d97706'),
-                                             array('name' => 'Sinexcel', 'img' => 'sinexcel.png', 'sub' => 'Bộ Lọc AHF', 'color' => '#16a34a'),
-                                             array('name' => 'Hensel', 'img' => 'hensel.png', 'sub' => 'Đức', 'color' => '#2563eb')
+                                             //array('name' => 'Sinexcel', 'img' => 'sinexcel.png', 'sub' => 'Bộ Lọc AHF', 'color' => '#16a34a'),
+                                             //array('name' => 'Hensel', 'img' => 'hensel.png', 'sub' => 'Đức', 'color' => '#2563eb')
                                           );
                                        ?>
                                        <!-- Nhóm 1: Logo Đối tác -->
