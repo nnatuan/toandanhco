@@ -16,6 +16,9 @@ body.single main .wgl-container {
     max-width: 1330px;
     width: 1330px;	
 }
+.woo_product_content .short_content {
+    display: none !important;
+}
 </style>
 <main id="main">
     <?php $this->load->view('modules/mod_right'); ?> 
@@ -48,7 +51,7 @@ body.single main .wgl-container {
                      </div>
                      <div class="woo_product_content">
                         <h2 class="woocommerce-loop-product__title"><a href="<?php echo $href; ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><?php echo $product['cproducts']?></a></h2>
-						<p class="short_content"><?php if($product['cnote']!="") echo $product['cnote']; ?></p>
+						<?php /* <p class="short_content"><?php if($product['cnote']!="") echo $product['cnote']; ?></p> */ ?>
                         <span class="price">
 							<?php if($product['fprice_sale'] < $product['fprice']) { ?>	
 							<del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><?php echo number_format($product['fprice']); ?><span class="woocommerce-Price-currencySymbol">₫</span></bdi></span></del> 

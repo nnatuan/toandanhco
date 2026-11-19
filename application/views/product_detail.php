@@ -25,6 +25,74 @@
 <script src="<?php echo base_url(); ?>js/rating.js"></script>   
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
  <style>
+/* WooCommerce Star Rating Display & FontAwesome Restoration */
+.woocommerce .star-rating,
+.star-rating,
+.woocommerce-product-rating .star-rating {
+  display: inline-block !important;
+  position: relative !important;
+  font-family: 'FontAwesome' !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  height: 1.2em !important;
+  width: 5.8em !important;
+  letter-spacing: 2px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+}
+.woocommerce .star-rating::before,
+.star-rating::before,
+.woocommerce-product-rating .star-rating::before {
+  content: "\f005\f005\f005\f005\f005" !important;
+  font-family: 'FontAwesome' !important;
+  color: #cbd5e1 !important;
+  float: left !important;
+  top: 0 !important;
+  left: 0 !important;
+  position: absolute !important;
+  letter-spacing: 2px !important;
+  white-space: nowrap !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+}
+.woocommerce .star-rating span,
+.star-rating span,
+.woocommerce-product-rating .star-rating span {
+  overflow: hidden !important;
+  float: left !important;
+  top: 0 !important;
+  left: 0 !important;
+  position: absolute !important;
+  padding-top: 1.5em !important;
+  height: 0 !important;
+  white-space: nowrap !important;
+}
+.woocommerce .star-rating span::before,
+.star-rating span::before,
+.woocommerce-product-rating .star-rating span::before {
+  content: "\f005\f005\f005\f005\f005" !important;
+  font-family: 'FontAwesome' !important;
+  top: 0 !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: #f59e0b !important;
+  letter-spacing: 2px !important;
+  white-space: nowrap !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+}
+.woocommerce-product-rating {
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 12px !important;
+  line-height: 1 !important;
+}
+
 .summary.entry-summary p {
     margin-bottom: 5px;
 }
@@ -182,9 +250,13 @@ tbody tr:nth-child(even) {
               </div>
                <div class="summary entry-summary">
                   <h1 class="product_title entry-title"><?php echo $obj_detail['cproducts']?></h1>
+                  <?php 
+                    $avg_rating = ($qty > 0) ? round($diem / $qty, 1) : 5.0;
+                    $rating_percent = ($qty > 0) ? round(($avg_rating / 5) * 100) : 100;
+                  ?>
                   <div class="woocommerce-product-rating">
-					<div class="star-rating" role="img" aria-label="">
-					<span style="width:90%">Rated <strong class="rating">5.0</strong></span>
+					<div class="star-rating" role="img" aria-label="<?php echo $avg_rating; ?>/5">
+					<span style="width:<?php echo $rating_percent; ?>%">Rated <strong class="rating"><?php echo $avg_rating; ?></strong></span>
 					</div>								
 					</div>
 				<p class="price">
